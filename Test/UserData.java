@@ -5,6 +5,7 @@ import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.logging.Logger;
+import java.io.IOException;
 
 public class UserData {
 
@@ -16,7 +17,7 @@ public class UserData {
     static String input = "";
     static String userName = "";
     static String userMood = "";
-    record User(String userName, String userMood) {
+    public record User(String userName, String userMood) {
 
         @Override
         public String toString() {
@@ -70,8 +71,9 @@ public class UserData {
             Files.writeString(Path.of("log.txt"), "User entered input \"" + userMood + "\" at " + LocalDateTime.now() + "\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             //user entered mood xxx
             System.out.println("You're " + userMood + "? It's really interesting you say that because I feel the same way.");
-            User user = new User(userName, userMood);
-            Files.writeString(Path.of("account.txt"), "Name: " + user.toString(), StandardOpenOption.CREATE);
+            User user = createUser(userName, userMood);
+            //Files.writeString(Path.of("account.txt"), "Name: " + user.toString(), StandardOpenOption.CREATE);
+            logEvent(Path.of("account.txt"), user.toString(), false);
             Files.writeString(Path.of("log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         } 
     
@@ -83,6 +85,11 @@ public class UserData {
         
     }//main
 
+    public static String readInput(Scanner sc){
+
+        return "";
+    }
+
     public static Command parseCommand(String input){
 
         return switch (input.trim().toLowerCase()) {
@@ -91,6 +98,31 @@ public class UserData {
             default -> Command.CONTINUE;
         };
     }
+
+    public static void logEvent(Path file, String event, boolean append){
+        try {
+            if(append){
+                Files.writeString(file, "Name: " + event, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+            }
+            else{
+                Files.writeString(file, "Name: " + event, StandardOpenOption.CREATE);
+            }
+        } 
+        catch (IOException e) {
+            e.printStackTrace(System.out);
+        }
+
+    }
+
+    public static User createUser(String name, String mood){
+        return new User(name, mood);
+    }
+
+    
+
+
+
+
 
     
 }//class
