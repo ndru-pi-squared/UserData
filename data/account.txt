@@ -1,2 +1,2 @@
-Name: "username":"ndru3"
-"mood":"nice"
+Name: "username":"null"
+"mood":"null"
