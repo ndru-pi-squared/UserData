@@ -11,7 +11,8 @@ public class UserData {
 
 //TODO
 //record the field in which the user was typing when writing to log in readInput()
-
+//handle clean exit by properly cleaning up when user types "exit" instead of simply calling System.exit
+//add while(running) loop? perhaps have readInput return boolean and input pair?
     //logging stuff
     static LocalDateTime sessionInit;
     private static final Logger logger = Logger.getLogger(UserData.class.getName());
