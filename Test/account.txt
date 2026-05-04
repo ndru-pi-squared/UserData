@@ -1,1 +1,2 @@
-Name: ndru, Mood: good
+Name: username=ndru
+mood=good
