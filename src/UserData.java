@@ -46,7 +46,8 @@ public class UserData {
         System.out.println("Hi!");
         try( Scanner sc = new Scanner(System.in)){
             
-            Files.writeString(Path.of("data/log.txt"), "User initiated session at " + sessionInit  +"\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            logEvent(Path.of("data/log.txt"), "User initiated session at " + sessionInit  +"\n", true);
+            //Files.writeString(Path.of("data/log.txt"), "User initiated session at " + sessionInit  +"\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             //fw.write("User initiated session at " + sessionInit);
             System.out.println("Can I get your name?");
             
@@ -54,18 +55,21 @@ public class UserData {
 
             switch(input){
                 case "exit" ->{
-                    Files.writeString(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                    logEvent(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n", true);
+                    //Files.writeString(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
                     System.out.println("Session terminated. Goodbye!");
                     return;
                 }
                     
                 case "help"->{
-                    Files.writeString(Path.of("data/log.txt"), "User asked for help at " + LocalDateTime.now() + "\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                    logEvent(Path.of("data/log.txt"), "User asked for help at " + LocalDateTime.now() + "\n", true);
+                    //Files.writeString(Path.of("data/log.txt"), "User asked for help at " + LocalDateTime.now() + "\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
                     System.out.println("Available commands: exit, help");
                 }
                 default->{
                     userName = input;
-                    Files.writeString(Path.of("data/log.txt"), "User entered input \"" + userName + "\" at " + LocalDateTime.now() + "\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                    logEvent(Path.of("data/log.txt"), "User entered input \"" + userName + "\" at " + LocalDateTime.now() + "\n", true);
+                    //Files.writeString(Path.of("data/log.txt"), "User entered input \"" + userName + "\" at " + LocalDateTime.now() + "\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
                     System.out.println("Hi,  " + userName + ". It's really nice to meet you.");
                 }
                     
@@ -73,20 +77,20 @@ public class UserData {
             
             System.out.println("How are you today?");
             userMood = sc.nextLine();
-            Files.writeString(Path.of("data/log.txt"), "User entered input \"" + userMood + "\" at " + LocalDateTime.now() + "\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            logEvent(Path.of("data/log.txt"), "User entered input \"" + userMood + "\" at " + LocalDateTime.now() + "\n", true);
+            //Files.writeString(Path.of("data/log.txt"), "User entered input \"" + userMood + "\" at " + LocalDateTime.now() + "\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             //user entered mood xxx
             System.out.println("You're " + userMood + "? It's really interesting you say that because I feel the same way.");
             User user = createUserRecord(userName, userMood);
             //Files.writeString(Path.of("account.txt"), "Name: " + user.toString(), StandardOpenOption.CREATE);
             writeAccountToFile(Path.of("data/account.txt"), user.toFileFormat(), false);
-            Files.writeString(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            logEvent(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n", true);
+            //Files.writeString(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         } 
     
         catch (Exception e) {
             e.printStackTrace(System.out);
         }
-        
-        //log session terminated
         
     }//main
 
