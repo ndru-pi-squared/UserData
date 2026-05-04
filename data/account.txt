@@ -1,2 +1,2 @@
 Name: username=ndru
-mood=good
+mood=okodd
