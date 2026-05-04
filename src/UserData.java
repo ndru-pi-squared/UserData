@@ -76,9 +76,9 @@ public class UserData {
             Files.writeString(Path.of("data/log.txt"), "User entered input \"" + userMood + "\" at " + LocalDateTime.now() + "\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             //user entered mood xxx
             System.out.println("You're " + userMood + "? It's really interesting you say that because I feel the same way.");
-            User user = createUser(userName, userMood);
+            User user = createUserRecord(userName, userMood);
             //Files.writeString(Path.of("account.txt"), "Name: " + user.toString(), StandardOpenOption.CREATE);
-            logEvent(Path.of("data/account.txt"), user.toFileFormat(), false);
+            writeAccountToFile(Path.of("data/account.txt"), user.toFileFormat(), false);
             Files.writeString(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         } 
     
@@ -106,10 +106,25 @@ public class UserData {
 
     public static void logEvent(Path file, String event, boolean append){
         try {
-            if(append){
+            if(append){ //if we're adding new data, writing to log.txt
                 Files.writeString(file, "Name: " + event, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
             }
-            else{
+            else{ //if we're overwriting existing data, previously writing to acccount.txt
+                //Files.writeString(file, "Name: " + event, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            }
+        } 
+        catch (IOException e) {
+            e.printStackTrace(System.out);
+        }
+
+    }
+
+    public static void writeAccountToFile(Path file, String event, boolean append){
+        try {
+            if(append){ //if we're adding new data
+                Files.writeString(file, "Name: " + event, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+            }
+            else{ //if we're overwriting existing data
                 Files.writeString(file, "Name: " + event, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             }
         } 
@@ -119,7 +134,7 @@ public class UserData {
 
     }
 
-    public static User createUser(String name, String mood){
+    public static User createUserRecord(String name, String mood){
         return new User(name, mood);
     }
 
