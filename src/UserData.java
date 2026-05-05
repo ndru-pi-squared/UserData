@@ -141,15 +141,10 @@ public class UserData {
 
     }
 
-    public static void writeAccountToFile(Path file, String event, boolean append){
+    public static void writeAccountToFile(Path file, String accountData, boolean append){
         try {
             logEvent(Path.of("data/log.txt"), "Account " + user.userName + " created at " + LocalDateTime.now()  +"\n", true);
-            if(append){ //if we're adding new data
-                Files.writeString(file, "Name: " + event, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
-            }
-            else{ //if we're overwriting existing data
-                Files.writeString(file, "Name: " + event, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-            }
+            Files.writeString(file, accountData, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } 
         catch (IOException e) {
             e.printStackTrace(System.out);
