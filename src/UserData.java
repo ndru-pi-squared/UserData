@@ -106,7 +106,7 @@ public class UserData {
         switch (c){
             case Command.EXIT -> {return false;}
             case Command.HELP -> System.out.println("Available commands: exit, help");
-            case Command.CONTINUE -> setName(input);
+            case Command.CONTINUE -> setName(input);//this is valid user data
         }
         logEvent(Path.of("data/log.txt"), "User entered input \"" + input + "\" into userName at " + LocalDateTime.now() + "\n", true);
         return true;
@@ -119,7 +119,7 @@ public class UserData {
         switch (c){
             case Command.EXIT -> {return false;}
             case Command.HELP -> System.out.println("Available commands: exit, help");
-            case Command.CONTINUE -> setMood(input);
+            case Command.CONTINUE -> setMood(input);//this is valid user data
         }
         logEvent(Path.of("data/log.txt"), "User entered input \"" + input + "\" into userMood at " + LocalDateTime.now() + "\n", true);
         System.out.println("You're " + userMood + "? It's really interesting you say that because I feel the same way.");
@@ -129,7 +129,7 @@ public class UserData {
     public static void logEvent(Path file, String event, boolean append){
         try {
             if(append){ //if we're adding new data, writing to log.txt
-                Files.writeString(file, "Name: " + event, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+                Files.writeString(file, event, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
             }
             else{ //if we're overwriting existing data, previously writing to acccount.txt
                 //Files.writeString(file, "Name: " + event, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
