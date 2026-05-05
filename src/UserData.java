@@ -1,4 +1,3 @@
-//import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,11 +9,10 @@ import java.util.logging.Logger;
 public class UserData {
 
     //logging stuff
-    static LocalDateTime sessionInit;
+    static LocalDateTime sessionTimeInit;
     private static final Logger logger = Logger.getLogger(UserData.class.getName());
 
     //user data
-    //static String input = "";
     static String userName = "";
     static String userMood = "";
     static User user;
@@ -41,13 +39,13 @@ public class UserData {
 
     public static void main (String[] args){
         logger.info("yo whats up");
-        sessionInit = LocalDateTime.now();
+        sessionTimeInit = LocalDateTime.now();
         
         boolean running = true;
         System.out.println("Hi!");
         try( Scanner sc = new Scanner(System.in)){
             
-            logEvent(Path.of("data/log.txt"), "User initiated session at " + sessionInit  +"\n");
+            logEvent(Path.of("data/log.txt"), "User initiated session at " + sessionTimeInit  +"\n");
             while(running){
                 running = promptUserForName(sc);
                 if(!running){
@@ -71,9 +69,7 @@ public class UserData {
         catch (Exception e) {
             e.printStackTrace(System.out);
         }
-        //if(systemTerminatedSession){
         logEvent(Path.of("data/log.txt"), "System terminated session at " + LocalDateTime.now()  +"\n");
-        //}
         
     }//main
 
