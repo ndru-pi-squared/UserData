@@ -46,7 +46,6 @@ public class UserData {
     public static void main (String[] args){
         logger.info("yo whats up");
         sessionInit = LocalDateTime.now();
-        boolean systemTerminatedSession = true;
         
         boolean running = true;
         System.out.println("Hi!");
@@ -54,23 +53,21 @@ public class UserData {
             
             logEvent(Path.of("data/log.txt"), "User initiated session at " + sessionInit  +"\n");
             while(running){
-                running = promptForUserName(sc);
+                running = promptUserForName(sc);
                 if(!running){
                     logEvent(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n"); 
-                    systemTerminatedSession = false;
-                    break;
+                    return;
                 }
-                System.out.println("You're " + userMood + "? It's really interesting you say that because I feel the same way.");
-                running = promptForUserMood(sc);
+                running = promptUserForMood(sc);
                 if(!running){
-                    logEvent(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n");
-                    systemTerminatedSession = false;  
-                    break;
+                    logEvent(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n"); 
+                    return;
                 }
                 user = createUserRecord(userName, userMood);
                 logEvent(Path.of("data/log.txt"), "Account " + user.userName + " created at " + LocalDateTime.now()  +"\n");
                 writeAccountToFile(Path.of("data/account.txt"), user.toFileFormat(), false);
-                running = false;
+                break;
+                //running = false;
             }   
         sc.close();
         } //try
@@ -78,9 +75,9 @@ public class UserData {
         catch (Exception e) {
             e.printStackTrace(System.out);
         }
-        if(systemTerminatedSession){
-            logEvent(Path.of("data/log.txt"), "System terminated session at " + LocalDateTime.now()  +"\n");
-        }
+        //if(systemTerminatedSession){
+        logEvent(Path.of("data/log.txt"), "System terminated session at " + LocalDateTime.now()  +"\n");
+        //}
         
     }//main
 
@@ -100,7 +97,7 @@ public class UserData {
     static void setMood(String mood){
         userMood = mood;
     }
-    public static boolean promptForUserName(Scanner sc){
+    public static boolean promptUserForName(Scanner sc){
         System.out.println("Can I get your name?");
         String input = sc.nextLine();
         Command c = parseInput(input);
@@ -110,10 +107,11 @@ public class UserData {
             case Command.CONTINUE -> setName(input);//this is valid user data
         }
         logEvent(Path.of("data/log.txt"), "User entered input \"" + input + "\" into userName at " + LocalDateTime.now() + "\n");
+        System.out.println("Hi,  " + userName + ". It's really nice to meet you.");
         return true;
     }
 
-    public static boolean promptForUserMood(Scanner sc){
+    public static boolean promptUserForMood(Scanner sc){
         System.out.println("How are you today?");
         String input = sc.nextLine();
         Command c = parseInput(input);
