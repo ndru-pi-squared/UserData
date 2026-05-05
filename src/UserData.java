@@ -52,23 +52,23 @@ public class UserData {
         System.out.println("Hi!");
         try( Scanner sc = new Scanner(System.in)){
             
-            logEvent(Path.of("data/log.txt"), "User initiated session at " + sessionInit  +"\n", true);
+            logEvent(Path.of("data/log.txt"), "User initiated session at " + sessionInit  +"\n");
             while(running){
                 running = promptForUserName(sc);
                 if(!running){
-                    logEvent(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n", true); 
+                    logEvent(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n"); 
                     systemTerminatedSession = false;
                     break;
                 }
                 System.out.println("You're " + userMood + "? It's really interesting you say that because I feel the same way.");
                 running = promptForUserMood(sc);
                 if(!running){
-                    logEvent(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n", true);
+                    logEvent(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n");
                     systemTerminatedSession = false;  
                     break;
                 }
                 user = createUserRecord(userName, userMood);
-                logEvent(Path.of("data/log.txt"), "Account " + user.userName + " created at " + LocalDateTime.now()  +"\n", true);
+                logEvent(Path.of("data/log.txt"), "Account " + user.userName + " created at " + LocalDateTime.now()  +"\n");
                 writeAccountToFile(Path.of("data/account.txt"), user.toFileFormat(), false);
                 running = false;
             }   
@@ -79,7 +79,7 @@ public class UserData {
             e.printStackTrace(System.out);
         }
         if(systemTerminatedSession){
-            logEvent(Path.of("data/log.txt"), "System terminated session at " + LocalDateTime.now()  +"\n", true);
+            logEvent(Path.of("data/log.txt"), "System terminated session at " + LocalDateTime.now()  +"\n");
         }
         
     }//main
@@ -109,7 +109,7 @@ public class UserData {
             case Command.HELP -> System.out.println("Available commands: exit, help");
             case Command.CONTINUE -> setName(input);//this is valid user data
         }
-        logEvent(Path.of("data/log.txt"), "User entered input \"" + input + "\" into userName at " + LocalDateTime.now() + "\n", true);
+        logEvent(Path.of("data/log.txt"), "User entered input \"" + input + "\" into userName at " + LocalDateTime.now() + "\n");
         return true;
     }
 
@@ -122,19 +122,14 @@ public class UserData {
             case Command.HELP -> System.out.println("Available commands: exit, help");
             case Command.CONTINUE -> setMood(input);//this is valid user data
         }
-        logEvent(Path.of("data/log.txt"), "User entered input \"" + input + "\" into userMood at " + LocalDateTime.now() + "\n", true);
+        logEvent(Path.of("data/log.txt"), "User entered input \"" + input + "\" into userMood at " + LocalDateTime.now() + "\n");
         System.out.println("You're " + userMood + "? It's really interesting you say that because I feel the same way.");
         return true;
     }
 
-    public static void logEvent(Path file, String event, boolean append){
+    public static void logEvent(Path file, String event){
         try {
-            if(append){ //if we're adding new data, writing to log.txt
-                Files.writeString(file, event, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
-            }
-            else{ //if we're overwriting existing data, previously writing to acccount.txt
-                //Files.writeString(file, "Name: " + event, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-            }
+            Files.writeString(file, event, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
         } 
         catch (IOException e) {
             e.printStackTrace(System.out);
