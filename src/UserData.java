@@ -68,6 +68,7 @@ public class UserData {
                     break;
                 }
                 user = createUserRecord(userName, userMood);
+                logEvent(Path.of("data/log.txt"), "Account " + user.userName + " created at " + LocalDateTime.now()  +"\n", true);
                 writeAccountToFile(Path.of("data/account.txt"), user.toFileFormat(), false);
                 running = false;
             }   
@@ -143,7 +144,6 @@ public class UserData {
 
     public static void writeAccountToFile(Path file, String accountData, boolean append){
         try {
-            logEvent(Path.of("data/log.txt"), "Account " + user.userName + " created at " + LocalDateTime.now()  +"\n", true);
             Files.writeString(file, accountData, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } 
         catch (IOException e) {
