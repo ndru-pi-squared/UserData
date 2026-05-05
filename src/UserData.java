@@ -108,7 +108,6 @@ public class UserData {
             case Command.HELP -> System.out.println("Available commands: exit, help");
             case Command.CONTINUE -> setName(input);
         }
-        setName(input);
         logEvent(Path.of("data/log.txt"), "User entered input \"" + input + "\" into userName at " + LocalDateTime.now() + "\n", true);
         return true;
     }
@@ -122,7 +121,6 @@ public class UserData {
             case Command.HELP -> System.out.println("Available commands: exit, help");
             case Command.CONTINUE -> setMood(input);
         }
-        setMood(input);
         logEvent(Path.of("data/log.txt"), "User entered input \"" + input + "\" into userMood at " + LocalDateTime.now() + "\n", true);
         System.out.println("You're " + userMood + "? It's really interesting you say that because I feel the same way.");
         return true;
