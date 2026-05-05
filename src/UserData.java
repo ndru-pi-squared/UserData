@@ -18,7 +18,7 @@ public class UserData {
     private static final Logger logger = Logger.getLogger(UserData.class.getName());
 
     //user data
-    static String input = "";
+    //static String input = "";
     static String userName = "";
     static String userMood = "";
     static User user;
@@ -46,20 +46,190 @@ public class UserData {
     public static void main (String[] args){
         logger.info("yo whats up");
         sessionInit = LocalDateTime.now();
+        boolean systemTerminatedSession = true;
         
-
+        boolean running = true;
         System.out.println("Hi!");
         try( Scanner sc = new Scanner(System.in)){
             
             logEvent(Path.of("data/log.txt"), "User initiated session at " + sessionInit  +"\n", true);
-            getName(sc);
-            getMood(sc);
+            while(running){
+                running = promptForUserName(sc);
+                if(!running){
+                    logEvent(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n", true); 
+                    systemTerminatedSession = false;
+                    break;
+                }
+                System.out.println("You're " + userMood + "? It's really interesting you say that because I feel the same way.");
+                running = promptForUserMood(sc);
+                if(!running){
+                    logEvent(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n", true);
+                    systemTerminatedSession = false;  
+                    break;
+                }
+                user = createUserRecord(userName, userMood);
+                writeAccountToFile(Path.of("data/account.txt"), user.toFileFormat(), false);
+                running = false;
+            }   
+        sc.close();
+        } //try
+    
+        catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        if(systemTerminatedSession){
+            logEvent(Path.of("data/log.txt"), "System terminated session at " + LocalDateTime.now()  +"\n", true);
+        }
+        
+    }//main
 
-            user = createUserRecord(userName, userMood);
-            writeAccountToFile(Path.of("data/account.txt"), user.toFileFormat(), false);
+    public static Command parseInput(String input){
+
+        return switch (input.trim().toLowerCase()) {
+            case "exit" -> Command.EXIT;
+            case "help" -> Command.HELP;
+            default -> Command.CONTINUE;
+        };
+    }
+
+    static void setName(String name){
+        userName = name;
+    }
+
+    static void setMood(String mood){
+        userMood = mood;
+    }
+    public static boolean promptForUserName(Scanner sc){
+        System.out.println("Can I get your name?");
+        String input = sc.nextLine();
+        Command c = parseInput(input);
+        switch (c){
+            case Command.EXIT -> {return false;}
+            case Command.HELP -> System.out.println("Available commands: exit, help");
+            case Command.CONTINUE -> setName(input);
+        }
+        setName(input);
+        logEvent(Path.of("data/log.txt"), "User entered input \"" + input + "\" into userName at " + LocalDateTime.now() + "\n", true);
+        return true;
+    }
+
+    public static boolean promptForUserMood(Scanner sc){
+        System.out.println("How are you today?");
+        String input = sc.nextLine();
+        Command c = parseInput(input);
+        switch (c){
+            case Command.EXIT -> {return false;}
+            case Command.HELP -> System.out.println("Available commands: exit, help");
+            case Command.CONTINUE -> setMood(input);
+        }
+        setMood(input);
+        logEvent(Path.of("data/log.txt"), "User entered input \"" + input + "\" into userMood at " + LocalDateTime.now() + "\n", true);
+        System.out.println("You're " + userMood + "? It's really interesting you say that because I feel the same way.");
+        return true;
+    }
+
+    public static void logEvent(Path file, String event, boolean append){
+        try {
+            if(append){ //if we're adding new data, writing to log.txt
+                Files.writeString(file, "Name: " + event, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+            }
+            else{ //if we're overwriting existing data, previously writing to acccount.txt
+                //Files.writeString(file, "Name: " + event, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            }
+        } 
+        catch (IOException e) {
+            e.printStackTrace(System.out);
+        }
+
+    }
+
+    public static void writeAccountToFile(Path file, String event, boolean append){
+        try {
+            logEvent(Path.of("data/log.txt"), "Account " + user.userName + " created at " + LocalDateTime.now()  +"\n", true);
+            if(append){ //if we're adding new data
+                Files.writeString(file, "Name: " + event, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+            }
+            else{ //if we're overwriting existing data
+                Files.writeString(file, "Name: " + event, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            }
+        } 
+        catch (IOException e) {
+            e.printStackTrace(System.out);
+        }
+
+    }
+
+    public static User createUserRecord(String name, String mood){
+        return new User(name, mood);
+    }
 
 
-            //Files.writeString(Path.of("data/log.txt"), "User initiated session at " + sessionInit  +"\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+
+    
+}//class
+
+
+
+
+
+            /*switch(input){
+                case "exit" ->{
+                    logEvent(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n", true);
+                    
+                    System.out.println("Session terminated. Goodbye!");
+                    return Command.EXIT;
+                    //sc.close();
+                    //System.exit(0);
+                    //return null;
+                }
+                    
+                case "help"->{
+                    logEvent(Path.of("data/log.txt"), "User asked for help at " + LocalDateTime.now() + "\n", true);
+                    return Command.EXIT;
+                    //System.out.println("Available commands: exit, help");
+                }
+                default->{
+                    //userMood = input;
+                    logEvent(Path.of("data/log.txt"), "User entered input \"" + input + "\" at " + LocalDateTime.now() + "\n", true);
+                    return Command.CONTINUE;
+                    //System.out.println("You're " + userMood + "? It's really interesting you say that because I feel the same way.");
+                }
+                    
+            }
+
+        //return input;
+    }
+    public static String readInput2(Scanner sc){
+        input = sc.nextLine(); 
+            switch(input){
+                case "exit" ->{
+                    logEvent(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n", true);
+                    
+                    System.out.println("Session terminated. Goodbye!");
+                    //sc.close();
+                    //System.exit(0);
+                    //return null;
+                }
+                    
+                case "help"->{
+                    logEvent(Path.of("data/log.txt"), "User asked for help at " + LocalDateTime.now() + "\n", true);
+                    
+                    System.out.println("Available commands: exit, help");
+                }
+                default->{
+                    //userMood = input;
+                    logEvent(Path.of("data/log.txt"), "User entered input \"" + input + "\" at " + LocalDateTime.now() + "\n", true);
+                    
+                    //System.out.println("You're " + userMood + "? It's really interesting you say that because I feel the same way.");
+                }
+                    
+            }
+
+        return input;
+    }*/
+
+
+   //Files.writeString(Path.of("data/log.txt"), "User initiated session at " + sessionInit  +"\n", StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             //fw.write("User initiated session at " + sessionInit);
             
             //System.out.println("Can I get your name?");
@@ -114,108 +284,3 @@ public class UserData {
                 }
                     
             }*/
-            
-        } 
-    
-        catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        logEvent(Path.of("data/log.txt"), "System terminated session at " + LocalDateTime.now()  +"\n", true);    
-    }//main
-
-    public static String readInput(Scanner sc){
-        input = sc.nextLine(); 
-
-            switch(input){
-                case "exit" ->{
-                    logEvent(Path.of("data/log.txt"), "User terminated session at " + LocalDateTime.now()  +"\n", true);
-                    
-                    System.out.println("Session terminated. Goodbye!");
-                    sc.close();
-                    System.exit(0);
-                    //return null;
-                }
-                    
-                case "help"->{
-                    logEvent(Path.of("data/log.txt"), "User asked for help at " + LocalDateTime.now() + "\n", true);
-                    
-                    System.out.println("Available commands: exit, help");
-                }
-                default->{
-                    //userMood = input;
-                    logEvent(Path.of("data/log.txt"), "User entered input \"" + input + "\" at " + LocalDateTime.now() + "\n", true);
-                    
-                    //System.out.println("You're " + userMood + "? It's really interesting you say that because I feel the same way.");
-                }
-                    
-            }
-
-        return input;
-    }
-
-    public static void getName(Scanner sc){
-        System.out.println("Can I get your name?");
-        userName = readInput(sc);
-        //logEvent(Path.of("data/log.txt"), "User entered input \"" + userName + "\" into userName at " + LocalDateTime.now() + "\n", true);
-        System.out.println("Hi,  " + userName + ". It's really nice to meet you.");
-    }
-
-    public static void getMood(Scanner sc){
-        System.out.println("How are you today?");
-        userMood = readInput(sc);
-        //logEvent(Path.of("data/log.txt"), "User entered input \"" + userName + "\" into userMood at " + LocalDateTime.now() + "\n", true);
-        System.out.println("You're " + userMood + "? It's really interesting you say that because I feel the same way.");
-    }
-
-    public static Command parseCommand(String input){
-
-        return switch (input.trim().toLowerCase()) {
-            case "exit" -> Command.EXIT;
-            case "help" -> Command.HELP;
-            default -> Command.CONTINUE;
-        };
-    }
-
-    public static void logEvent(Path file, String event, boolean append){
-        try {
-            if(append){ //if we're adding new data, writing to log.txt
-                Files.writeString(file, "Name: " + event, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
-            }
-            else{ //if we're overwriting existing data, previously writing to acccount.txt
-                //Files.writeString(file, "Name: " + event, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-            }
-        } 
-        catch (IOException e) {
-            e.printStackTrace(System.out);
-        }
-
-    }
-
-    public static void writeAccountToFile(Path file, String event, boolean append){
-        try {
-            logEvent(Path.of("data/log.txt"), "Account " + user.userName + " created at " + LocalDateTime.now()  +"\n", true);
-            if(append){ //if we're adding new data
-                Files.writeString(file, "Name: " + event, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
-            }
-            else{ //if we're overwriting existing data
-                Files.writeString(file, "Name: " + event, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-            }
-        } 
-        catch (IOException e) {
-            e.printStackTrace(System.out);
-        }
-
-    }
-
-    public static User createUserRecord(String name, String mood){
-        return new User(name, mood);
-    }
-
-    
-
-
-
-
-
-    
-}//class
