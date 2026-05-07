@@ -1,5 +1,7 @@
 //parses user input and commands, and calls appropriate services to handle them
 
+//package com.app.input;
+
 public class InputParser {
     
     int x; //just for example

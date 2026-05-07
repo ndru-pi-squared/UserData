@@ -1,5 +1,7 @@
 //owns application flow, the "program director"
 
+//package com.app.controller;
+
 public class AppController {
     
     int x; //just for example
