@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.app'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JUnit for testing (you’ll use this later for UserServiceTest etc.)
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+}
+
+application {
+    
+    mainClass = 'com.app.main.Main'
+}
+
+test {
+    useJUnitPlatform()
+}
