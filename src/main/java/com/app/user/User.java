@@ -1,6 +1,6 @@
 //user class to represent a user in the system
 
-//package com.app.user;
+package com.app.user;
 
 public class User {
     

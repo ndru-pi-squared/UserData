@@ -4,12 +4,17 @@ package com.app.controller;
 public class AppController {
     
     int x; //just for example
+    boolean running;
     
     public AppController(int y){
         x = y;    
     }
 
     public void run(){
-        System.out.println("Running app controller with x = " + x);
+        running = true;
+        while(running){
+            System.out.println("Running app controller with x = " + x);
+            break; //to prevent infinite loop for now, will add actual flow control later
+        }
     }
 }
