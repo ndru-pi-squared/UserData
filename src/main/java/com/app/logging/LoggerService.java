@@ -1,29 +1,20 @@
+package com.app.logging;
+
 //service class to handle logging operations
-import java.util.logging.Level;
-import java.util.logging.Logger;
+public class LoggerService {
 
-//package com.app.logger;
-
-class LoggerService {
-    int x; //just for example
-    //private static final Logger logger = Logger.getLogger(LoggerService.class.getName());
-
-    public LoggerService(int y){
-        x = y;    
+    public LoggerService(){
+        //for now, just print a message to console when logger service is initialized
+        System.out.println("Logger service initialized");
     }
 
-
-    public void disable(Class<?> c) {
-        Logger.getLogger(c.getName()).setLevel(Level.OFF);
+    public void logEvent(LogEvent event){
+        //for now, just print the event to console with its level
+        System.out.println(event.toString());
     }
-
-    public void enableInfo(Class<?> c) {
-        Logger.getLogger(c.getName()).setLevel(Level.INFO);
-    }
-
 
     public void run(){
-        System.out.println("Running logger service with x = " + x);
+        System.out.println("Running logger service");
         //logger.info("yo whats up");
     }
 }
