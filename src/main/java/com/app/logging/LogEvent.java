@@ -1,29 +1,23 @@
 package com.app.logging;
 
+import java.time.LocalDateTime;
+
 public class LogEvent {
     
     public String event;
     public LogLevel level;
+    public LocalDateTime timestamp;
 
-    public LogEvent(String event, LogLevel level){
-        this.event = event;
+    public LogEvent(LocalDateTime timestamp, LogLevel level, String event){
         this.level = level;
-        //for now, just print the event to console with its level
-        //System.out.println("[" + level + "] " + event);
-
+        this.event = event;
+        this.timestamp = timestamp;
     }
 
-    public enum LogLevel {
-        DEBUG,
-        INFO,
-        WARN,
-        ERROR
-    }
 
     @Override
     public String toString() {
-        return "event=" + this.event + "\n" +
-            "level=" + this.level + "\n";
+        return String.format("[%s] [%s] %s", timestamp, level, event);
     }
 
 
