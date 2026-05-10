@@ -20,6 +20,12 @@ public class LogEvent {
         ERROR
     }
 
+    @Override
+    public String toString() {
+        return "event=" + this.event + "\n" +
+            "level=" + this.level + "\n";
+    }
+
 
 
 }
