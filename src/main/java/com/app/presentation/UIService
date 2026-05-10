@@ -1,0 +1,15 @@
+package com.app.presentation;
+
+//class to handle user interface related operations, such as displaying prompts, showing output, etc.
+public class UIService {
+    
+    int x; //just for example
+    
+    public UIService(int y){
+        x = y;    
+    }
+
+    public void run(){
+        System.out.println("Running UI service with x = " + x);
+    }
+}
