@@ -1,7 +1,6 @@
-//user class to represent a user in the system
-
 package com.app.user;
 
+//user class to represent a user in the system
 public class User {
     
     String name;

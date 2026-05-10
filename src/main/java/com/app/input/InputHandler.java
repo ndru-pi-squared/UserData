@@ -1,7 +1,6 @@
+package com.app.input;
+
 //talks to the user, displays prompts, reads input
-
-//package com.app.input;
-
 public class InputHandler {
     
     int x; //just for example

@@ -1,7 +1,6 @@
 package com.app.user;
 
 //service class to handle user related operations
-
 public class UserService {
 
     public User createUser(String name, String mood) {
