@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
 //service class to handle user related operations
-class UserRepo {
+class UserFileRepository {
 
     public static void writeAccountToFile(Path file, String accountData, boolean append){
         try {
