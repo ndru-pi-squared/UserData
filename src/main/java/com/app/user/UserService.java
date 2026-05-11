@@ -8,7 +8,7 @@ public class UserService {
     }
 
     //User user = createUser(name, mood)
-    //string data = userSerializer.serializer(user)
+    //string data = userSerializer.serialize(user)
     //userfilerepository.save(data)
     
 
