@@ -17,6 +17,24 @@ public class User {
             "mood=" + mood + "\n";
     }
 
+    void setName(String uName){
+        name = uName;
+    }
+
+    void setMood(String uMood){
+        mood = uMood;
+    }
+
+    String getName(){
+        return name;
+    }
+
+    String getMood(){
+        return mood;
+    }
+
+    
+
     public void run(){
         System.out.println("Running user with name = " + name + " and mood = " + mood);
     }
