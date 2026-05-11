@@ -11,12 +11,7 @@ public class Main {
 
     public static void main (String[] args){
         System.out.println("Hello, world!");
-        AppController appController = new AppController(10);
+        AppController appController = new AppController();
         appController.run();
-        //LoggerService loggerService = new LoggerService();
-        //LogEvent event = new LogEvent(LocalDateTime.now(), LogLevel.INFO, "Application started");
-        //loggerService.logEvent(event);
-        //LoggerConfig loggerConfig = new LoggerConfig();
-        //loggerConfig.run();
     }
 }
