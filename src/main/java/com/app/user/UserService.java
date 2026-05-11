@@ -7,6 +7,11 @@ public class UserService {
         return new User(name, mood);
     }
 
+    //User user = createUser(name, mood)
+    //string data = userSerializer.serializer(user)
+    //userfilerepository.save(data)
+    
+
     public void run(){
        User user = createUser("Alice", "Happy");
        System.out.println("Created user: " + user);
