@@ -8,9 +8,15 @@ import java.nio.file.StandardOpenOption;
 //writes LogEvents to a file
 public class LogToFile{
 
-    public void append(Path file, String event){
+    private final Path file = Path.of("data/log.txt");
+
+    public LogToFile() {
+        
+    }
+
+    public void append(String event){//previous args: Path file, String event
         try {
-            Files.writeString(file, event, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+            Files.writeString(this.file, event, StandardOpenOption.APPEND, StandardOpenOption.CREATE);
         } 
         catch (IOException e) {
             e.printStackTrace(System.out);
@@ -18,9 +24,9 @@ public class LogToFile{
 
     }
 
-    public void write(Path file, String event){
+    public void write(String event){//previous args: Path file, String event
         try {
-            Files.writeString(file, event, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            Files.writeString(this.file, event, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } 
         catch (IOException e) {
             e.printStackTrace(System.out);
