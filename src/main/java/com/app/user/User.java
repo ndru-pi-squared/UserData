@@ -17,18 +17,22 @@ public class User {
             "mood=" + mood + "\n";
     }
 
+    @SuppressWarnings("unused")//intentionally unused for now until integration
     void setName(String uName){
         name = uName;
     }
 
+    @SuppressWarnings("unused")
     void setMood(String uMood){
         mood = uMood;
     }
 
+    @SuppressWarnings("unused")
     String getName(){
         return name;
     }
 
+    @SuppressWarnings("unused")
     String getMood(){
         return mood;
     }
