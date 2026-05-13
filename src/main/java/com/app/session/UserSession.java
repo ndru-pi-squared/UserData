@@ -23,6 +23,7 @@ public class UserSession {
         this.active = true;
         System.out.println("User session initiated");
     }
+    
     public void run(){
         //for now, just print a message to console when session is initiated
         System.out.println("User session initiated");
