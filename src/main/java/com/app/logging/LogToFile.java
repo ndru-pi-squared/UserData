@@ -10,7 +10,7 @@ public class LogToFile{
 
     private final Path file = Path.of("data/log.txt");
 
-    public LogToFile() {
+    public LogToFile() { //could be strategy pattern FileLogStrategy, ConsoleLogStrategy later
         
     }
 
