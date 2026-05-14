@@ -2,6 +2,9 @@ package com.app.session;
 
 import java.time.LocalDateTime;
 
+import com.app.event.SessionCreatedEvent;
+
+
 //user session class to represent a user session in the system, will be used to track user activity and manage session state
 public class UserSession implements Session { 
 
@@ -14,18 +17,31 @@ public class UserSession implements Session {
     @SuppressWarnings("unused")
     final private String role; 
     private SessionState sessionState; //placeholder to track session state, will be used to manage session lifecycle and determine when to log session termination events
-    //boolean isauthenticated
+    final private SessionType sessionType;
     
     public UserSession(LocalDateTime sessionTimeInit, String userID, String role){
         this.sessionTimeInit = sessionTimeInit;
         this.userID = userID;
         this.role = role;
         sessionState = SessionState.ACTIVE;
+        sessionType = SessionType.USER;
     }
 
     @Override
+    public SessionCreatedEvent toSessionCreatedEvent() {//TODO: this responsibility should be in an even mapper class
+        return new SessionCreatedEvent(sessionTimeInit, userID, role, sessionType);
+    }
+    @Override
     public LocalDateTime getStartTime() {
         return sessionTimeInit;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     @Override
