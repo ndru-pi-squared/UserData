@@ -17,7 +17,6 @@ import com.app.session.SessionFactory;
 public class AppController {
     
     boolean running;
-    @SuppressWarnings("unused")
     private final LoggerService loggerService;
     private final SessionCreatedEventListener sessionCreatedEventListener;
     private final EventDispatcher eventDispatcher;
