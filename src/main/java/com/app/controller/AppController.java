@@ -4,8 +4,11 @@ package com.app.controller;
 
 import java.time.LocalDateTime;
 
+import com.app.event.SessionCreatedEvent;
+import com.app.event.SessionCreatedEventListener;
 import com.app.logging.LoggerService;
-import com.app.session.UserSession;
+import com.app.session.Session;
+import com.app.session.SessionFactory;
 //import com.app.event.SessionCreatedEvent;
 //import com.app.logging.LogEvent;
 //import com.app.logging.LogLevel;
@@ -14,18 +17,21 @@ public class AppController {
     
     boolean running;
     @SuppressWarnings("unused")
-    LoggerService loggerService;
+    private final LoggerService loggerService;
+    private final SessionCreatedEventListener sessionCreatedEventListener;
 
     public AppController(){
         loggerService = new LoggerService();
+        sessionCreatedEventListener = new SessionCreatedEventListener(loggerService);
     }
 
     public void run(){
         running = true;
-        @SuppressWarnings("unused")
-        UserSession userSession = new UserSession(LocalDateTime.now(), "userID", "role");
+        //TODO: wrap the following two lines in an event dispatcher
+        Session userSession = SessionFactory.createUserSession(LocalDateTime.now(), "userID", "role");
+        SessionCreatedEvent sessionCreatedEvent = userSession.toSessionCreatedEvent();//take a snapshot of the session created
+        sessionCreatedEventListener.onEvent(sessionCreatedEvent);//log the session creation
         while(running){
-            //loggerService.logEvent(new LogEvent(LocalDateTime.now(), LogLevel.INFO, "Session initiated"));
             break; //to prevent infinite loop for now, will add actual flow control later
         }
         //logging events
