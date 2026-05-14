@@ -36,17 +36,22 @@ public class UserSession implements Session {
         return sessionTimeInit;
     }
 
+     @Override
+    public boolean isActive() {
+        return sessionState == SessionState.ACTIVE;
+    }
+
+    @Override
+    public SessionType getSessionType() {
+        return sessionType;
+    }
+
     public String getUserID() {
         return userID;
     }
 
     public String getRole() {
         return role;
-    }
-
-    @Override
-    public boolean isActive() {
-        return sessionState == SessionState.ACTIVE;
     }
 
     public void activate() {

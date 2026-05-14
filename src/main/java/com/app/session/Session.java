@@ -9,5 +9,6 @@ import com.app.event.SessionCreatedEvent;
 public interface Session {
     LocalDateTime getStartTime();
     boolean isActive();
-     SessionCreatedEvent toSessionCreatedEvent();
+    SessionCreatedEvent toSessionCreatedEvent();
+    SessionType getSessionType();
 }
