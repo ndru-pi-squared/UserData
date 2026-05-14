@@ -14,7 +14,7 @@ public class LoggerService {
     public void logEvent(LogEvent event){
         //for now, just print the event to console with its level
         System.out.println(event.toString());
-        logToFile.append(event.toString());
+        logToFile.append(event.toString() +"\n");
     }
 
     public void run(){
