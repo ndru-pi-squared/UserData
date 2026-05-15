@@ -11,7 +11,7 @@ import com.app.session.UserSession;
 
 public class EventSnapshotter {
 
-    public SessionCreatedEvent toUserSessionCreatedEvent(UserSession userSession) { 
+    public SessionCreatedEvent takeSnapshot(UserSession userSession) { 
         return new SessionCreatedEvent(userSession.getStartTime(), userSession.getUserID(), userSession.getRole(), userSession.getSessionType());
     }
 
