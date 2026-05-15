@@ -2,8 +2,6 @@ package com.app.session;
 
 import java.time.LocalDateTime;
 
-import com.app.event.SessionCreatedEvent;
-
 
 //user session class to represent a user session in the system, will be used to track user activity and manage session state
 public class UserSession implements Session { 
@@ -27,10 +25,10 @@ public class UserSession implements Session {
         sessionType = SessionType.USER;
     }
 
-    @Override
-    public SessionCreatedEvent toSessionCreatedEvent() {//TODO: this responsibility should be in an even mapper class
+    /*@Override
+    public SessionCreatedEvent toSessionCreatedEvent() {//handled in event snapshotter class to decouple
         return new SessionCreatedEvent(sessionTimeInit, userID, role, sessionType);
-    }
+    }*/
     @Override
     public LocalDateTime getStartTime() {
         return sessionTimeInit;

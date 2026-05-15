@@ -4,11 +4,10 @@ package com.app.session;
 
 import java.time.LocalDateTime;
 
-import com.app.event.SessionCreatedEvent;
 
 public interface Session {
     LocalDateTime getStartTime();
     boolean isActive();
-    SessionCreatedEvent toSessionCreatedEvent();
+    //SessionCreatedEvent toSessionCreatedEvent(); //handled in event snapshotter class to decouple
     SessionType getSessionType();
 }
