@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 //session factory class to create different types of sessions in the system, will be used to centralize session creation logic and provide a single point of entry for creating sessions in the system
 public class SessionFactory {
 
-    public static Session createUserSession(LocalDateTime sessionInitTime, String userId, String role) {
+    public static UserSession createUserSession(LocalDateTime sessionInitTime, String userId, String role) {
         return new UserSession(sessionInitTime, userId, role);
     }
 
