@@ -47,7 +47,7 @@ public class UserData {
         System.out.println("Hi!");
         try( Scanner sc = new Scanner(System.in)){
             
-            logEvent(Path.of("data/log.txt"), "User initiated session at " + sessionTimeInit  +"\n");
+            logEvent(Path.of("data/log.txt"), "User initiated session at " + sessionTimeInit  +"\n");//this is where i left off porting logic from this rough draft to my object oriented design
             while(running){
                 running = promptUserForName(sc);
                 if(!running){
