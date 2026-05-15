@@ -1,8 +1,11 @@
 package com.app.logging;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class LogEvent {
+
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS");
     
     public String event;
     public LogLevel level;
@@ -28,7 +31,7 @@ public class LogEvent {
 
     @Override
     public String toString() {
-        return String.format("[%s] [%s] %s", timestamp, level, event);
+        return String.format("[%s] [%s] %s", timestamp.format(formatter), level, event);
     }
 
 
