@@ -15,6 +15,6 @@ public class SessionCreatedEventListener implements EventListener<SessionCreated
     @Override
     public void onEvent(SessionCreatedEvent event) {
         // Handle session created event
-        loggerService.logEvent(new LogEvent(event.getSessionTimeInit(), LogLevel.INFO, event.getSessionType() +" session initiated"));
+        loggerService.logEvent(new LogEvent(event.getSessionTimeInit(), LogLevel.INFO, event.getRole().toString() +" session initiated"));
     }
 }
