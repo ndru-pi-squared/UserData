@@ -13,6 +13,8 @@ public class UIService {
         System.out.println("Running UI service with x = " + x);
     }
 
+    //one idea is to have statements stored in a data structure and then display them based on an enum value passed to a method
+
     //System.out.println("Hi!");
     //prompt user for name
         //System.out.println("Can I get your name?");
