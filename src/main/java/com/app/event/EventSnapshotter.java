@@ -12,7 +12,7 @@ import com.app.session.UserSession;
 public class EventSnapshotter {
 
     public SessionCreatedEvent takeSnapshot(UserSession userSession) { 
-        return new SessionCreatedEvent(userSession.getStartTime(), userSession.getUserID(), userSession.getRole(), userSession.getSessionType());
+        return new SessionCreatedEvent(userSession.getStartTime(), userSession.getUserID(), userSession.getRole());
     }
 
     //public SessionCreatedEvent toGuestSessionCreatedEvent(GuestSession guestSession) { //for example
