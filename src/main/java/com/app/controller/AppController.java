@@ -11,6 +11,7 @@ import com.app.event.SessionCreatedEventListener;
 import com.app.logging.LoggerService;
 import com.app.session.SessionFactory;
 import com.app.session.UserSession;
+import com.app.user.UserRole;
 //import com.app.event.SessionCreatedEvent;
 //import com.app.logging.LogEvent;
 //import com.app.logging.LogLevel;
@@ -22,8 +23,10 @@ public class AppController {
     private final SessionCreatedEventListener sessionCreatedEventListener;
     private final EventDispatcher eventDispatcher;
     private final EventSnapshotter eventSnapshotter;
+    private final UserRole userRole;
 
-    public AppController(){
+    public AppController(UserRole userRole){
+        this.userRole = userRole;
         loggerService = new LoggerService();
         sessionCreatedEventListener = new SessionCreatedEventListener(loggerService);
         eventDispatcher = new EventDispatcher(sessionCreatedEventListener);
@@ -33,7 +36,7 @@ public class AppController {
     public void run(){
         running = true;
         //TODO: wrap the following two lines in an event dispatcher
-        UserSession userSession = SessionFactory.createUserSession(LocalDateTime.now(), "userID", "role");
+        UserSession userSession = SessionFactory.createUserSession(LocalDateTime.now(), "userID", userRole);
         SessionCreatedEvent sessionCreatedEvent = eventSnapshotter.takeSnapshot(userSession);
         eventDispatcher.dispatch(sessionCreatedEvent);
         while(running){
