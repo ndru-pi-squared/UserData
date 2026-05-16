@@ -9,5 +9,5 @@ public interface Session {
     LocalDateTime getStartTime();
     boolean isActive();
     //SessionCreatedEvent toSessionCreatedEvent(); //handled in event snapshotter class to decouple
-    SessionType getSessionType();
+
 }
