@@ -20,7 +20,7 @@ public class LogToFileTest {
         Path path = Path.of("data/log.txt");
         Files.deleteIfExists(path);
         LogToFile logToFile = new LogToFile();
-        logToFile.write("This is a test log entry.");
+        logToFile.write("This is a test log entry.\n");
         assertTrue(Files.exists(path));
 
     }
@@ -29,13 +29,14 @@ public class LogToFileTest {
     void shouldPersistLogEntry() throws IOException {
         Path path = Path.of("data/log.txt");
         LogToFile logToFile = new LogToFile();
-        LogEvent event = new LogEvent(fixed, LogLevel.INFO, "This is a test log entry.");
+        LogEvent event = new LogEvent(fixed, LogLevel.INFO, "This is a test log entry.\n");
         logToFile.write(event.toString());
         
         
         try(BufferedReader reader = Files.newBufferedReader(path)){
+            String expected = "[2024-01-01T12:00:00.000000000] [INFO] This is a test log entry.";
             String line = reader.readLine();
-            assertEquals(event.toString(), line);
+            assertEquals(expected, line);
         }
     }
 
@@ -43,7 +44,7 @@ public class LogToFileTest {
     void shouldCreateLogFileWithFixedTimestamp() throws IOException {
         Path path = Path.of("data/log.txt");
         LogToFile logToFile = new LogToFile();
-        LogEvent event = new LogEvent(fixed, LogLevel.INFO, "This is a test log entry.");
+        LogEvent event = new LogEvent(fixed, LogLevel.INFO, "This is a test log entry.\n");
         logToFile.write(event.toString());
         
         
