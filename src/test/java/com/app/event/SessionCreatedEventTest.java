@@ -14,7 +14,7 @@ public class SessionCreatedEventTest {
     @Test
     void shouldCreateSessionCreatedEvent() {
         SessionCreatedEvent event = new SessionCreatedEvent(fixed, "user123", UserRole.ADMIN);
-        assertEquals(fixed, event.getSessionTimeInit());
+        assertEquals(fixed, event.getSessionStartTime());
         assertEquals("user123", event.getUserID());
         assertEquals(UserRole.ADMIN, event.getRole());
     }
