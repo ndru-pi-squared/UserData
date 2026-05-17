@@ -1,6 +1,7 @@
 package com.app.logging;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -8,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 public class LogEventTest {
     LocalDateTime fixed = LocalDateTime.of(2024, 1, 1, 12, 0);
-
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS");
     @Test
     void shouldCreateLogEventWithInfoLevel() {
 
@@ -78,7 +79,7 @@ public class LogEventTest {
 
         LogEvent event =
             new LogEvent(
-                LocalDateTime.now(),
+                fixed,
                 LogLevel.INFO,
                 "Application started"
             );
@@ -87,7 +88,7 @@ public class LogEventTest {
         assertEquals("Application started", event.getEvent());
         assertNotNull(event.getTimestamp());
         assertEquals(
-            String.format("[%s] [%s] %s", event.getTimestamp(), event.getLevel(), event.getEvent()),
+            String.format("[%s] [%s] %s", formatter.format(fixed), event.getLevel(), event.getEvent()),
             event.toString()
         );
     }
